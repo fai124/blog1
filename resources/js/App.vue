@@ -6,25 +6,7 @@
 
         <!-- Menu -->
         <MenuComponent />
-
-        <!-- Main -->
-        <div id="main">
-            <!-- Post -->
-            <PostComponent />
-
-            <!-- Pagination -->
-            <ul class="actions pagination">
-                <li>
-                    <a href="" class="disabled button big previous"
-                        >Previous Page</a
-                    >
-                </li>
-                <li><a href="#" class="button big next">Next Page</a></li>
-            </ul>
-        </div>
-
-        <!-- Sidebar -->
-        <SideBarComponent />
+        <HomePage v-if="page == 'HomePage'" />
     </div>
     <FooterComponent />
 </template>
@@ -33,17 +15,20 @@
 import MenuComponent from './components/MenuComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
-import PostComponent from './components/PostComponent.vue';
-import SideBarComponent from './components/SideBarComponent.vue';
+import HomePage from './pages/HomePage.vue';
 
 export default {
     name: 'App',
+    data() {
+        return {
+            page: 'HomePage',
+        };
+    },
     components: {
         MenuComponent,
         HeaderComponent,
         FooterComponent,
-        PostComponent,
-        SideBarComponent,
+        HomePage,
     },
 };
 </script>
