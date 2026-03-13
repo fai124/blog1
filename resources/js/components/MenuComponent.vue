@@ -26,31 +26,20 @@
 
                 <li><h3>Registration</h3></li>
                 <li>
-                    <form action="?" method="post">
-                        <input
-                            type="text"
-                            name="neme"
-                            placeholder="Username"
-                        /><br />
-                        <input
-                            type="password"
-                            name="neme"
-                            placeholder="Password"
-                        /><br />
-                        <input type="file" name="file" /><br /><br />
-                        <input
-                            type="submit"
-                            class="button big fit"
-                            value="Sign up"
-                        />
-                    </form>
+                    <RegisterComponent />
                 </li>
             </ul>
         </section>
     </section>
 </template>
 <script>
+import RegisterComponent from './RegsiterComponent.vue'
+
 export default {
     name: 'MenuComponent',
+    components: {
+        RegisterComponent,
+    },
+    props: ["datasend"]
 };
 </script>
