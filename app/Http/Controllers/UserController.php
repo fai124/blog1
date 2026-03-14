@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function register(UserRegisterRequest $request) {
-        $user = New User();
+    public function register(UserRegisterRequest $request)
+    {
+        $user = new User();
         $user->fullname = $request->fullname;
         $user->username = $request->username;
         $user->password = $request->password;
-        $path = Storage::disk("public")->putFile("avatars", $request->file("#avatar"));
+        $path = Storage::disk("public")->putFile("avatars", $request->file("avatar"));
         $user->avatar = $path;
         $user->save();
-        return response()->json(["token" => $user->createToken("api")->plainTextToken ]);
+        return response()->json(["token" => $user->createToken("api")->plainTextToken]);
     }
 }

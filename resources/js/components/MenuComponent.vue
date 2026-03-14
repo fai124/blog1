@@ -26,7 +26,7 @@
 
                 <li><h3>Registration</h3></li>
                 <li>
-                    <RegisterComponent />
+                    <RegisterComponent :datasend="datasend" :changeToken="changeToken"/>
                 </li>
             </ul>
         </section>

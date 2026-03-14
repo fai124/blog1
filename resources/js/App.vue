@@ -5,7 +5,7 @@
         <HeaderComponent />
 
         <!-- Menu -->
-        <MenuComponent :datasend="datasend"/>
+        <MenuComponent :datasend="datasend" :changeToken="changeToken"/>
         <HomePage v-if="page == 'HomePage'" />
     </div>
     <FooterComponent />
@@ -22,7 +22,8 @@ export default {
     data() {
         return {
             page: 'HomePage',
-            API: 'http://127.0.0.1:8000/',
+            API: 'http://127.0.0.1:8000/api/',
+            user: false,
         };
     },
     components: {
@@ -46,7 +47,7 @@ export default {
             //formdata.append('email', 'asd@student.com');
 
             let requestOptions = {
-                method: 'method',
+                method: method,
                 headers: myHeaders,
                 redirect: 'follow',
             };
@@ -55,12 +56,11 @@ export default {
                 requestOptions.body = formdata;
             }
 
-            return await fetch(api + route, requestOptions)
+            return await fetch(this.API + route, requestOptions)
                 .then((response) => response.json())
         },
         changeToken(token){
             localStorage.setItem("token", token);
-            this.user = true;
             this.getUser();
         },
     },
