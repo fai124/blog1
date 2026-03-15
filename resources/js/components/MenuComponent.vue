@@ -33,13 +33,13 @@
     </section>
 </template>
 <script>
-import RegisterComponent from './RegsiterComponent.vue'
+import RegisterComponent from './RegisterComponent.vue'
 
 export default {
     name: 'MenuComponent',
     components: {
         RegisterComponent,
     },
-    props: ["datasend"]
+    props: ["datasend", "changeToken"]
 };
 </script>

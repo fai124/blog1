@@ -38,7 +38,7 @@ export default {
             myHeaders.append('Accept', 'application/json');
             if (localStorage.getItem('token')) {
                 myHeaders.append(
-                    'Autorization',
+                    'Authorization',
                     'Bearer ' + localStorage.getItem('token'),
                 );
             }
