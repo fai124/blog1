@@ -2,7 +2,7 @@
     <section id="menu">
         <!-- Actions -->
         <section>
-            <ul class="actions vertical">
+            <ul class="actions vertical" v-if="!user">
                 <li><h3>Login</h3></li>
                 <li>
                     <form action="?" method="post">
@@ -29,6 +29,10 @@
                     <RegisterComponent :datasend="datasend" :changeToken="changeToken"/>
                 </li>
             </ul>
+            <ul v-else>
+                <li>Добавить пост</li>
+                <li>Выход</li>
+            </ul>
         </section>
     </section>
 </template>
@@ -40,6 +44,6 @@ export default {
     components: {
         RegisterComponent,
     },
-    props: ["datasend", "changeToken"]
+    props: ["datasend", "changeToken", "user"]
 };
 </script>

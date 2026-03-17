@@ -5,7 +5,11 @@
         <HeaderComponent />
 
         <!-- Menu -->
-        <MenuComponent :datasend="datasend" :changeToken="changeToken"/>
+        <MenuComponent
+            :datasend="datasend"
+            :user="user"
+            :changeToken="changeToken"
+        />
         <HomePage v-if="page == 'HomePage'" />
     </div>
     <FooterComponent />
@@ -24,6 +28,7 @@ export default {
             page: 'HomePage',
             API: 'http://127.0.0.1:8000/api/',
             user: false,
+            userInfo: {},
         };
     },
     components: {
@@ -32,7 +37,17 @@ export default {
         FooterComponent,
         HomePage,
     },
+    mounted() {
+        if (localStorage.getItem('token')) {
+            this.getUser();
+        }
+    },
     methods: {
+        getUser() {
+            this.datasend('user')
+                .then((response) => this.user - true, this.userInfo - response)
+                .catch((error) => console.error(error));
+        },
         async datasend(route, method = 'GET', formdata = null) {
             let myHeaders = new Headers();
             myHeaders.append('Accept', 'application/json');
@@ -56,11 +71,13 @@ export default {
                 requestOptions.body = formdata;
             }
 
-            return await fetch(this.API + route, requestOptions)
-                .then((response) => response.json())
+            return await fetch(this.API + route, requestOptions).then(
+                (response) => response.json(),
+            );
         },
-        changeToken(token){
-            localStorage.setItem("token", token);
+        changeToken(token) {
+            localStorage.setItem('token', token);
+            this.user = true;
             this.getUser();
         },
     },
