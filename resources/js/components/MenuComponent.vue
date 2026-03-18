@@ -4,25 +4,7 @@
         <section>
             <ul class="actions vertical" v-if="!user">
                 <li><h3>Login</h3></li>
-                <li>
-                    <form action="?" method="post">
-                        <input
-                            type="text"
-                            name="neme"
-                            placeholder="Username"
-                        /><br />
-                        <input
-                            type="password"
-                            name="neme"
-                            placeholder="Password"
-                        /><br />
-                        <input
-                            type="submit"
-                            class="button big fit"
-                            value="Log In"
-                        />
-                    </form>
-                </li>
+                <AuthComponent :datasend="datasend" :changeToken="changeToken"/>
 
                 <li><h3>Registration</h3></li>
                 <li>
@@ -37,12 +19,14 @@
     </section>
 </template>
 <script>
+import AuthComponent from './AuthComponent.vue';
 import RegisterComponent from './RegisterComponent.vue'
 
 export default {
     name: 'MenuComponent',
     components: {
         RegisterComponent,
+        AuthComponent,
     },
     props: ["datasend", "changeToken", "user"]
 };
