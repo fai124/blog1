@@ -27,7 +27,7 @@ class UserController extends Controller
         $user = User::where("username", $request->username)->first();
         if (Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            return response()->json(["message" => "молодец", "token" => $user->createToken("api")->plainTextToken]);
+            return response()->json(["message" => "ok", "token" => $user->createToken("api")->plainTextToken]);
         }
         return response()->json(["message" => "пользователь потеряшка", "errors" => ("password")]);
     }
