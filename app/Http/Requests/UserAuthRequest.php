@@ -22,7 +22,7 @@ class UserAuthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "username" => "required|unique:users",
+            "username" => "required",
             "password" => "required",
         ];
     }

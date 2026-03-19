@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserAuthRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,13 +23,19 @@ class UserController extends Controller
         $user->save();
         return response()->json(["token" => $user->createToken("api")->plainTextToken]);
     }
-    public function auth(UserRegisterRequest $request)
-    {
-        $user = User::where("username", $request->username)->first();
-        if (Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return response()->json(["message" => "ok", "token" => $user->createToken("api")->plainTextToken]);
-        }
-        return response()->json(["message" => "пользователь потеряшка", "errors" => ("password")]);
+    public function auth(UserAuthRequest $request)
+{
+    $user = User::where('username', $request->username)->first();
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'message' => 'ok',
+            'errors' => [
+                'password' => ['Неверный логин или пароль']
+            ]
+        ], 422);
     }
+    return response()->json([
+        'token' => $user->createToken('api')->plainTextToken
+    ]);
+}
 }

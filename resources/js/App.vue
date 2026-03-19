@@ -45,8 +45,14 @@ export default {
     methods: {
         getUser() {
             this.datasend('user')
-                .then((response) => this.user - true, this.userInfo - response)
-                .catch((error) => console.error(error));
+                .then((response) => {
+                    this.user = true;
+                    this.userInfo = response;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    localStorage.removeItem('token');
+                });
         },
         async datasend(route, method = 'GET', formdata = null) {
             let myHeaders = new Headers();
