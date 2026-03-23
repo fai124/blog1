@@ -2,15 +2,17 @@
     <!-- Wrapper -->
     <div id="wrapper">
         <!-- Header -->
-        <HeaderComponent />
+        <HeaderComponent :userInfo="userInfo" :PUBLIC="PUBLIC" :changePage="changePage" />
 
         <!-- Menu -->
         <MenuComponent
             :datasend="datasend"
             :user="user"
             :changeToken="changeToken"
+            :changePage="changePage"
         />
         <HomePage v-if="page == 'HomePage'" />
+        <PostAdd v-if="page == 'PostAdd'" />
     </div>
     <FooterComponent />
 </template>
@@ -20,6 +22,7 @@ import MenuComponent from './components/MenuComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import HomePage from './pages/HomePage.vue';
+import PostAdd from './pages/PostAdd.vue';
 
 export default {
     name: 'App',
@@ -27,6 +30,7 @@ export default {
         return {
             page: 'HomePage',
             API: 'http://127.0.0.1:8000/api/',
+            PUBLIC: 'http://127.0.0.1:8000/storage/',
             user: false,
             userInfo: {},
         };
@@ -36,6 +40,7 @@ export default {
         HeaderComponent,
         FooterComponent,
         HomePage,
+        PostAdd,
     },
     mounted() {
         if (localStorage.getItem('token')) {
@@ -43,6 +48,9 @@ export default {
         }
     },
     methods: {
+        changePage(page) {
+            this.page = page;
+        },
         getUser() {
             this.datasend('user')
                 .then((response) => {
