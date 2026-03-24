@@ -13,7 +13,7 @@
             </ul>
             <ul v-else>
                 <li><a href="#" @click="changePage('PostAdd')">Добавить пост</a></li>
-                <li>Выход</li>
+                <li><a href="#" @click="logout()">Выход</a></li>
             </ul>
         </section>
     </section>
@@ -28,6 +28,6 @@ export default {
         RegisterComponent,
         AuthComponent,
     },
-    props: ["datasend", "changeToken", "user" , "changePage"]
+    props: ["datasend", "changeToken", "user" , "changePage", "logout"]
 };
 </script>

@@ -32,10 +32,15 @@ class UserController extends Controller
             'errors' => [
                 'password' => ['Неверный логин или пароль']
             ]
-        ], 422);
+        ], 322);
     }
     return response()->json([
         'token' => $user->createToken('api')->plainTextToken
     ]);
+}
+public function logout(Request $request)
+{
+    $request -> user()->currentAccessToken()->delete();
+    return response()->json(['message' => 'ok',]);
 }
 }

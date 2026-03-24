@@ -2,10 +2,15 @@
     <!-- Wrapper -->
     <div id="wrapper">
         <!-- Header -->
-        <HeaderComponent :userInfo="userInfo" :PUBLIC="PUBLIC" :changePage="changePage" />
+        <HeaderComponent
+            :userInfo="userInfo"
+            :PUBLIC="PUBLIC"
+            :changePage="changePage"
+        />
 
         <!-- Menu -->
         <MenuComponent
+            :logout="logout"
             :datasend="datasend"
             :user="user"
             :changeToken="changeToken"
@@ -48,6 +53,20 @@ export default {
         }
     },
     methods: {
+        logout(token) {
+            this.datasend('logout')
+                .then((result) => {
+                    if (result) {
+                        localStorage.removeItem('token');
+                        this.changePage('HomePage');
+                        this.user = false;
+                        this.userInfo = [];
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
         changePage(page) {
             this.page = page;
         },
@@ -84,7 +103,6 @@ export default {
             if (method != 'GET') {
                 requestOptions.body = formdata;
             }
-
             return await fetch(this.API + route, requestOptions).then(
                 (response) => response.json(),
             );

@@ -19,7 +19,14 @@
     <SideBarComponent />
 </template>
 <script>
+import PostComponent from '../components/PostComponent.vue';
+import SideBarComponent from '../components/SideBarComponent.vue';
+
 export default {
     name: 'HomePage',
+    components: {
+        PostComponent,
+        SideBarComponent,
+    },
 };
 </script>
