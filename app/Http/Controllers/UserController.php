@@ -32,7 +32,7 @@ class UserController extends Controller
             'errors' => [
                 'password' => ['Неверный логин или пароль']
             ]
-        ], 322);
+        ]);
     }
     return response()->json([
         'token' => $user->createToken('api')->plainTextToken
