@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -14,7 +16,7 @@ class PostController extends Controller
      */
     public function PostAdd()
     {
-        
+
     }
 
     /**
@@ -30,7 +32,17 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $post = new Post();
+        $post->user_id = Auth::id();
+        $post->name = $request->name;
+        $post->subtitle = $request->subtitle;
+        $post->anons = $request->anons;
+        $post->content = $request->content;
+        $path = Storage::disk("public")->putFile("photos", $request->file("photo"));
+        $post->photo = $path;
+        $post->save();
+        return response()->json(["id"->$post->id]);
+
     }
 
     /**
