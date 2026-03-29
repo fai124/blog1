@@ -41,7 +41,7 @@ class PostController extends Controller
         $path = Storage::disk("public")->putFile("photos", $request->file("photo"));
         $post->photo = $path;
         $post->save();
-        return response()->json(["id"->$post->id]);
+        return response()->json(['id' =>$post->id]);
 
     }
 
