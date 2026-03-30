@@ -16,8 +16,9 @@
             :changeToken="changeToken"
             :changePage="changePage"
         />
-        <HomePage v-if="page == 'HomePage'" />
-        <PostAdd v-if="page == 'PostAdd'" :datasend="datasend" />
+        <HomePage v-if="page == 'HomePage'" :datasend="datasend"  :pageId="pageId" />
+        <PostAdd v-if="page == 'PostAdd'" :datasend="datasend" :changePage="changePage" :pageId="pageId"/>
+        <SinglePage v-if="page == 'SinglePage'" :datasend="datasend"  :pageId="pageId"/>
     </div>
     <FooterComponent />
 </template>
@@ -28,12 +29,14 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import HomePage from './pages/HomePage.vue';
 import PostAdd from './pages/PostAdd.vue';
+import SinglePage from './pages/SinglePage.vue';
 
 export default {
     name: 'App',
     data() {
         return {
             page: 'HomePage',
+            pageId: null,
             API: 'http://127.0.0.1:8000/api/',
             PUBLIC: 'http://127.0.0.1:8000/storage/',
             user: false,
@@ -46,6 +49,7 @@ export default {
         FooterComponent,
         HomePage,
         PostAdd,
+        SinglePage,
     },
     mounted() {
         if (localStorage.getItem('token')) {
@@ -67,8 +71,9 @@ export default {
                     console.error(error);
                 });
         },
-        changePage(page) {
+        changePage(page, pageId = null) {
             this.page = page;
+            pageId = pageId;
         },
         getUser() {
             this.datasend('user')

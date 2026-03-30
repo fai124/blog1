@@ -37,7 +37,7 @@
 <script>
 export default {
     name: 'PostAdd',
-    props: ['datasend'],
+    props: ['datasend', 'changePage', 'pageId'],
     data() {
         return {
             name: null,
@@ -64,9 +64,9 @@ export default {
                 if (result.errors) {
                     this.errors = result.errors;
                 }
-                //if(result.token) {
-                //this.changeToken(result.token);
-                //}
+                if(result.id) {
+                    this.changePage("SinglePage", result.id)
+                }
             });
             // .catch((error) => console.error(error));
         },
