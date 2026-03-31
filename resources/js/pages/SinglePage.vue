@@ -14,7 +14,7 @@
                         >1 ноября 2015</time
                     >
                     <a href="#" class="author"
-                        ><span class="name">Jane Doe</span
+                        ><span class="name">{{ post.user.name }}</span
                         ><img src="images/avatar.jpg" alt=""
                     /></a>
                 </div>

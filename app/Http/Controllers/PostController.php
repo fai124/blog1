@@ -50,7 +50,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
+        $post = Post::with('user')->findOrFail($post);
         return $post;
     }
 
