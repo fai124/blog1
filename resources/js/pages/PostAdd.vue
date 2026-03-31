@@ -60,15 +60,15 @@ export default {
             }
 
             this.datasend('postadd', 'POST', formdata).then((result) => {
-                console.log(result);
                 if (result.errors) {
                     this.errors = result.errors;
                 }
+                console.log(result);
                 if(result.id) {
                     this.changePage("SinglePage", result.id)
                 }
             });
-            // .catch((error) => console.error(error));
+             //.catch((error) => console.log('error', error));
         },
     },
 };

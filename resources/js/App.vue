@@ -18,7 +18,7 @@
         />
         <HomePage v-if="page == 'HomePage'" :datasend="datasend"  :pageId="pageId" />
         <PostAdd v-if="page == 'PostAdd'" :datasend="datasend" :changePage="changePage" :pageId="pageId"/>
-        <SinglePage v-if="page == 'SinglePage'" :datasend="datasend"  :pageId="pageId"/>
+        <SinglePage v-if="page == 'SinglePage'" :datasend="datasend"  :pageId="pageId" :PUBLIC="PUBLIC"/>
     </div>
     <FooterComponent />
 </template>
@@ -73,7 +73,7 @@ export default {
         },
         changePage(page, pageId = null) {
             this.page = page;
-            pageId = pageId;
+           this.pageId = pageId;
         },
         getUser() {
             this.datasend('user')

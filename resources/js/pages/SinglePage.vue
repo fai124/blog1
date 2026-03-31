@@ -6,8 +6,8 @@
         <article class="post">
             <header>
                 <div class="title">
-                    <h2><a href="#">Magna sed adipiscing</a></h2>
-                    <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+                    <h2><a href="#">{{ post.name }}</a></h2>
+                    <p>{{ post.subtitle }}</p>
                 </div>
                 <div class="meta">
                     <time class="published" datetime="2015-11-01"
@@ -20,25 +20,12 @@
                 </div>
             </header>
             <span class="image featured"
-                ><img src="images/pic01.jpg" alt=""
+                ><img :src="PUBLIC+post.photo" alt=""
             /></span>
             <p>
-                {{ pageId }}
             </p>
             <p>
-                Nunc quis dui scelerisque, scelerisque urna ut, dapibus orci.
-                Sed vitae condimentum lectus, ut imperdiet quam. Maecenas in
-                justo ut nulla aliquam sodales vel at ligula. Sed blandit diam
-                odio, sed fringilla lectus molestie sit amet. Praesent eu tortor
-                viverra lorem mattis pulvinar feugiat in turpis. Class aptent
-                taciti sociosqu ad litora torquent per conubia nostra, per
-                inceptos himenaeos. Fusce ullamcorper tellus sit amet mattis
-                dignissim. Phasellus ut metus ligula. Curabitur nec leo turpis.
-                Ut gravida purus quis erat pretium, sed pellentesque massa
-                elementum. Fusce vestibulum porta augue, at mattis justo.
-                Integer sed sapien fringilla, dapibus risus id, faucibus ante.
-                Pellentesque mattis nunc sit amet tortor pellentesque, non
-                placerat neque viverra.
+                {{ post.content }}
             </p>
             <footer>
                 <ul class="stats">
@@ -100,6 +87,16 @@
 <script>
 export default {
     name: 'SinglePage',
-    props: ['datasend','pageId'],
+    props: ['datasend','PUBLIC','pageId'],
+    data() {
+        return {
+            post: {},
+        }
+    },
+    mounted() {
+        this.datasend('post/'+this.pageId).then((result) => {
+                this.post = result;
+            });
+    },
 };
 </script>
