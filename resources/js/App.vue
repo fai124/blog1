@@ -57,14 +57,15 @@ export default {
         }
     },
     methods: {
-        logout(token) {
+        logout() {
             this.datasend('logout')
                 .then((result) => {
                     if (result) {
                         localStorage.removeItem('token');
                         this.changePage('HomePage');
                         this.user = false;
-                        this.userInfo = [];
+                        this.userInfo = {};
+                        console.log(result);
                     }
                 })
                 .catch((error) => {
@@ -109,7 +110,15 @@ export default {
                 requestOptions.body = formdata;
             }
             return await fetch(this.API + route, requestOptions).then(
-                (response) => response.json(),
+                (response) => {
+                    if(response.status == 401){
+                         localStorage.removeItem('token');
+                         this.changePage('HomePage');
+                        this.user = false;
+                        this.userInfo = {};
+                    }
+               return response.json();
+                }
             );
         },
         changeToken(token) {

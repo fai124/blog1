@@ -3,7 +3,7 @@
     <div id="main">
         <!-- Post -->
 
-        <article class="post">
+        <article class="post" v-if="post">
             <header>
                 <div class="title">
                     <h2><a href="#">{{ post.name }}</a></h2>
@@ -14,7 +14,7 @@
                         >1 ноября 2015</time
                     >
                     <a href="#" class="author"
-                        ><span class="name">{{ post.user.name }}</span
+                        ><span class="name">{{post.user.username }}</span
                         ><img src="images/avatar.jpg" alt=""
                     /></a>
                 </div>
@@ -90,12 +90,13 @@ export default {
     props: ['datasend','PUBLIC','pageId'],
     data() {
         return {
-            post: {},
+            post: null,
         }
     },
     mounted() {
         this.datasend('post/'+this.pageId).then((result) => {
                 this.post = result;
+                console.log(result);
             });
     },
 };
