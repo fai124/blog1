@@ -6,7 +6,9 @@
         <article class="post" v-if="post">
             <header>
                 <div class="title">
-                    <h2><a href="#">{{ post.name }}</a></h2>
+                    <h2>
+                        <a href="#">{{ post.name }}</a>
+                    </h2>
                     <p>{{ post.subtitle }}</p>
                 </div>
                 <div class="meta">
@@ -14,16 +16,15 @@
                         >1 ноября 2015</time
                     >
                     <a href="#" class="author"
-                        ><span class="name">{{post.user.username }}</span
-                        ><img src="images/avatar.jpg" alt=""
+                        ><span class="name">{{ post.user.username }}</span
+                        ><img :src="PUBLIC + post.user.avatar" alt=""
                     /></a>
                 </div>
             </header>
             <span class="image featured"
-                ><img :src="PUBLIC+post.photo" alt=""
+                ><img :src="PUBLIC + post.photo" alt=""
             /></span>
-            <p>
-            </p>
+            <p></p>
             <p>
                 {{ post.content }}
             </p>
@@ -32,7 +33,7 @@
                     <li><a href="#">Edit</a></li>
                     <li><a href="#" class="red">Delete</a></li>
                     <li><a href="#" class="red">Blocked</a></li>
-                    <li><a href="#" class="icon fa-heart">28</a></li>
+                    <li><a href="#" class="icon fa-heart heart">28</a></li>
                     <li><a href="#" class="icon fa-comment">128</a></li>
                 </ul>
             </footer>
@@ -42,35 +43,17 @@
         <div class="post">
             <section class="comments">
                 <h3>Comments</h3>
-                <form>
-                    <textarea></textarea><br />
-                    <input
-                        type="submit"
-                        class="button big fit"
-                        value="Add Comment"
-                    />
-                </form>
+                <div>
+                    <textarea v-model="comment"></textarea><br />
+                    <div class="alert alert-danger" v-if="errors.comment">
+                        {{ errors.comment.join('. ') }}
+                    </div>
+                    <button type="button" class="button big fit" @click="addComment">
+                        Add Comment
+                    </button>
+                </div>
             </section>
-            <article class="comment">
-                <div class="comment-autor">
-                    <a href="#"><img src="images/avatar.jpg" /></a>
-                    <a href="#">User</a>
-                </div>
-                <p>
-                    Mauris neque quam, fermentum ut nisl vitae, convallis
-                    maximus nisl. Sed mattis nunc id lorem euismod placerat.
-                </p>
-            </article>
-            <article class="comment">
-                <div class="comment-autor">
-                    <a href="#"><img src="images/avatar.jpg" /></a>
-                    <a href="#">User</a>
-                </div>
-                <p>
-                    Mauris neque quam, fermentum ut nisl vitae, convallis
-                    maximus nisl. Sed mattis nunc id lorem euismod placerat.
-                </p>
-            </article>
+            {{ post.comments }}
             <article class="comment">
                 <div class="comment-autor">
                     <a href="#"><img src="images/avatar.jpg" /></a>
@@ -87,17 +70,37 @@
 <script>
 export default {
     name: 'SinglePage',
-    props: ['datasend','PUBLIC','pageId'],
+    props: ['datasend', 'PUBLIC', 'pageId'],
     data() {
         return {
             post: null,
-        }
+            comment: null,
+            errors: {},
+        };
     },
     mounted() {
-        this.datasend('post/'+this.pageId).then((result) => {
+        this.getPost();
+    },
+    methods: {
+        getPost() {
+            this.datasend('post/' + this.pageId).then((result) => {
                 this.post = result;
                 console.log(result);
             });
+        },
+        addComment() {
+            let formdata = new FormData();
+            if (this.comment) formdata.append('comment', this.comment);
+            this.datasend('comment/' + this.pageId, 'POST', formdata).then(
+                (result) => {
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    } else {
+                        this.getPost();
+                    }
+                },
+            );
+        },
     },
 };
 </script>
