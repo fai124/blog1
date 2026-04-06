@@ -16,66 +16,18 @@
                 <h3>Popular posts</h3>
                 <div class="mini-posts">
                     <!-- Mini Post -->
-                    <article class="mini-post">
+                    <article class="mini-post" v-for="popular in populars">
                         <header>
-                            <h3><a href="#">Vitae sed condimentum</a></h3>
+                            <h3><a href="#" @click.prevent="changePage("SinglePage", post_id)">{{ post.name }}</a></h3>
                             <time class="published" datetime="2015-10-20"
                                 >1 Ноября 2015</time
                             >
                             <a href="#" class="author"
-                                ><img src="images/avatar.jpg" alt=""
+                                ><img :src="PUBLIC + post.user.avatar" alt=""
                             /></a>
                         </header>
                         <a href="#" class="image"
-                            ><img src="images/pic04.jpg" alt=""
-                        /></a>
-                    </article>
-
-                    <!-- Mini Post -->
-                    <article class="mini-post">
-                        <header>
-                            <h3><a href="#">Rutrum neque accumsan</a></h3>
-                            <time class="published" datetime="2015-10-19"
-                                >1 Ноября 2015</time
-                            >
-                            <a href="#" class="author"
-                                ><img src="images/avatar.jpg" alt=""
-                            /></a>
-                        </header>
-                        <a href="#" class="image"
-                            ><img src="images/pic05.jpg" alt=""
-                        /></a>
-                    </article>
-
-                    <!-- Mini Post -->
-                    <article class="mini-post">
-                        <header>
-                            <h3><a href="#">Odio congue mattis</a></h3>
-                            <time class="published" datetime="2015-10-18"
-                                >1 Ноября 2015</time
-                            >
-                            <a href="#" class="author"
-                                ><img src="images/avatar.jpg" alt=""
-                            /></a>
-                        </header>
-                        <a href="#" class="image"
-                            ><img src="images/pic06.jpg" alt=""
-                        /></a>
-                    </article>
-
-                    <!-- Mini Post -->
-                    <article class="mini-post">
-                        <header>
-                            <h3><a href="#">Enim nisl veroeros</a></h3>
-                            <time class="published" datetime="2015-10-17"
-                                >1 Ноября 2015</time
-                            >
-                            <a href="#" class="author"
-                                ><img src="images/avatar.jpg" alt=""
-                            /></a>
-                        </header>
-                        <a href="#" class="image"
-                            ><img src="images/pic07.jpg" alt=""
+                            ><img :src="PUBLIC + post.photo" alt=""
                         /></a>
                     </article>
                 </div>
@@ -183,5 +135,6 @@
 <script>
 export default {
     name: 'SideBarComponent',
+    props: ['datasend', 'PUBLIC', 'pageId', 'changePage', 'populars'],
 };
 </script>

@@ -11,15 +11,18 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index(Request $request)
     {
-        return Post::withCount("comments", "likes")->with("user")->paginate();
+        return Post::withCount("comments", "likes")->with("user")->paginate(1);
+        $popular = Post::withCount('likes', 'comments')->with('user')->where('blocked', 0)->orderBy('likes_count', 'desc')->limit(4)->get();
+        return response()->json(["posts" => $posts, 'popular' => $popular]);
     }
 
     public function postuser(User $user)
