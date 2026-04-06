@@ -18,16 +18,16 @@
                     <!-- Mini Post -->
                     <article class="mini-post" v-for="popular in populars">
                         <header>
-                            <h3><a href="#" @click.prevent="changePage("SinglePage", post_id)">{{ post.name }}</a></h3>
+                            <h3><a href="#" @click.prevent="changePage('SinglePage', popular_id)">{{ popular.name }}</a></h3>
                             <time class="published" datetime="2015-10-20"
                                 >1 Ноября 2015</time
                             >
-                            <a href="#" class="author"
-                                ><img :src="PUBLIC + post.user.avatar" alt=""
+                            <a href="#" @click.prevent="changePage('UserPage', popular.user_id)" class="author"
+                                ><img :src="PUBLIC + popular.user.avatar" alt=""
                             /></a>
                         </header>
-                        <a href="#" class="image"
-                            ><img :src="PUBLIC + post.photo" alt=""
+                        <a href="#" @click.prevent="changePage('SinglePage', popular_id)" class="image"
+                            ><img :src="PUBLIC + popular.photo" alt=""
                         /></a>
                     </article>
                 </div>

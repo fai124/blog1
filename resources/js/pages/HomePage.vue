@@ -44,7 +44,7 @@ export default {
         getPost(page = 1) {
             this.datasend('posts?page=' + page)
             .then((result) => {
-                this.posts = result;
+                this.posts = result.posts;
                 this.page = result.current_page;
                 this.populars = result.populars;
                 console.log(result);

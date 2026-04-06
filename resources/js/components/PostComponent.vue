@@ -26,7 +26,7 @@
                 <li><a href="#" @click.prevent="changePage('SinglePage', post.id)" class="button big">Continue Reading</a></li>
             </ul>
             <ul class="stats">
-                <li><a href="#" class="icon fa-heart">{{ post.likes_count }}</a></li>
+                <li><a href="#" @click.prevent="changePage('SinglePage', post.id)" class="icon fa-heart">{{ post.likes_count }}</a></li>
                 <li><a href="#" class="icon fa-comment">{{ post.comments_count }}</a></li>
             </ul>
         </footer>

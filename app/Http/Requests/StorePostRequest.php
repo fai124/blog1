@@ -22,7 +22,7 @@ class StorePostRequest extends FormRequest
             "subtitle"=>"required",
             "anons"=>"required",
             "content"=>"required",
-            "photo"=>"required|image",
+            "photo"=>"required|image|mimes:png,jpeg,jpg",
         ];
     }
 }

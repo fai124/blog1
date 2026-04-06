@@ -18,11 +18,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        return Post::withCount("comments", "likes")->with("user")->paginate(1);
-        $popular = Post::withCount('likes', 'comments')->with('user')->where('blocked', 0)->orderBy('likes_count', 'desc')->limit(4)->get();
-        return response()->json(["posts" => $posts, 'popular' => $popular]);
+        $posts = Post::withCount("comments", "likes")->with("user")->paginate(1);
+        // $populars = Post::withCount("comments", "likes")->with("user")->limit(1)->get();
+        $populars = Post::withCount('likes', 'comments')->with('user')->orderBy('likes_count', 'desc')->limit(4)->get();
+        return response()->json(["posts" => $posts, 'populars' => $populars]);
     }
 
     public function postuser(User $user)
@@ -108,6 +109,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+          return response()->json(['message' => ":ok"]);
     }
 }

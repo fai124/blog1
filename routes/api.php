@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/postedit/{post}', [PostController::class, 'update']);
     Route::post('/comment/{post}', [CommentController::class, 'store']);
     Route::get('/like/{post}', [LikeController::class, 'store']);
+    Route::get('/destroy/{post}', [PostController::class, 'destroy']);
 });

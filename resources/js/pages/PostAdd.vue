@@ -32,7 +32,7 @@
                 {{ pageId ? 'Edit' : 'Add' }} Post
             </button>
         </article>
-        <div v-if = "pageId">
+        <div v-if = "pageId ">
             <img :src="PUBLIC + photo" alt=""/>
         </div>
     </div>

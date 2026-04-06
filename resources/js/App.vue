@@ -80,6 +80,9 @@ export default {
            this.pageId = pageId;
            localStorage.setItem("page", page);
            localStorage.setItem("pageId", pageId);
+           if(this.page == 'null'){
+            localStorage.remove("pageId");
+           }
         },
         getUser() {
             this.datasend('user')

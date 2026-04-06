@@ -31,7 +31,7 @@
             <footer>
                 <ul class="stats">
                     <li v-if="isAdmin"><a href="#" @click.prevent="changePage('PostAdd', pageId)">Edit</a></li>
-                    <li v-if="isAdmin"><a href="#" class="red">Delete</a></li>
+                    <li v-if="isAdmin"><a href="#" class="red" @click="deletePost">Delete</a></li>
                     <li v-if="isAdmin"><a href="#" class="red">Blocked</a></li>
                     <li><a href="#" @click.prevent="likeClick" class="icon fa-heart heart" :class="{liked: isLike}">{{ post.likes_count }}</a></li>
                     <li><a href="#commentblock" class="icon fa-comment">{{ post.comments_count }}</a></li>
@@ -116,6 +116,12 @@ export default {
                 },
             );
         },
+        deletePost() {
+            this.datasend("destroy/" + this.pageId).then((result) => {
+                console.log(result);
+                this.changePage("HomePage");
+            });
     },
+}
 };
 </script>
