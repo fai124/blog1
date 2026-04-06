@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Like;
 
 class Post extends Model
 {
@@ -17,5 +18,9 @@ class Post extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Like::class);
     }
 }

@@ -16,9 +16,10 @@
             :changeToken="changeToken"
             :changePage="changePage"
         />
-        <HomePage v-if="page == 'HomePage'" :datasend="datasend"  :pageId="pageId" />
-        <PostAdd v-if="page == 'PostAdd'" :datasend="datasend" :changePage="changePage" :pageId="pageId"/>
-        <SinglePage v-if="page == 'SinglePage'" :datasend="datasend"  :pageId="pageId" :PUBLIC="PUBLIC"/>
+        <HomePage v-if="page == 'HomePage'" :datasend="datasend" :changePage="changePage" :pageId="pageId" :PUBLIC="PUBLIC"/>
+        <PostAdd v-if="page == 'PostAdd'" :datasend="datasend" :changePage="changePage" :pageId="pageId" :PUBLIC="PUBLIC"/>
+        <SinglePage v-if="page == 'SinglePage'" :datasend="datasend" :changePage="changePage" :pageId="pageId" :PUBLIC="PUBLIC"/>
+        <UserPage v-if="page == 'UserPage'" :datasend="datasend" :changePage="changePage" :pageId="pageId" :PUBLIC="PUBLIC"/>
     </div>
     <FooterComponent />
 </template>
@@ -30,13 +31,14 @@ import FooterComponent from './components/FooterComponent.vue';
 import HomePage from './pages/HomePage.vue';
 import PostAdd from './pages/PostAdd.vue';
 import SinglePage from './pages/SinglePage.vue';
+import UserPage from './pages/UserPage.vue';
 
 export default {
     name: 'App',
     data() {
         return {
-            page: 'HomePage',
-            pageId: null,
+            page: localStorage.getItem('page')||'HomePage',
+            pageId: localStorage.getItem('pageId')||null,
             API: 'http://127.0.0.1:8000/api/',
             PUBLIC: 'http://127.0.0.1:8000/storage/',
             user: false,
@@ -50,6 +52,7 @@ export default {
         HomePage,
         PostAdd,
         SinglePage,
+        UserPage,
     },
     mounted() {
         if (localStorage.getItem('token')) {
@@ -75,6 +78,8 @@ export default {
         changePage(page, pageId = null) {
             this.page = page;
            this.pageId = pageId;
+           localStorage.setItem("page", page);
+           localStorage.setItem("pageId", pageId);
         },
         getUser() {
             this.datasend('user')

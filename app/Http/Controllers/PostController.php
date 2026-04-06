@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Post;
+use App\Models\Like;
+use App\Models\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -14,9 +17,14 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function PostAdd()
+    public function index(User $user)
     {
+        return Post::withCount("comments", "likes")->with("user")->paginate();
+    }
 
+    public function postuser(User $user)
+    {
+        return Post::where("user_id", $user->id)->withCount("comments", "likes")->with("user")->get();
     }
 
     /**
@@ -50,9 +58,20 @@ class PostController extends Controller
      */
     public function show($post)
     {
-        $post = Post::with('user', 'comments')->findOrFail($post);
-        $comments = Comment::where("post_id")->;
-        return $post;
+        $post = Post::with('user')->withCount('likes', 'comments')->findOrFail($post);
+        $comments = Comment::with('user')->where('post_id', $post->id)->get();
+        $isLike = false;
+        $isAdmin = false;
+        if((Auth::check())){
+            $like=Like::where("post_id", $post->id)->where("user_id", Auth::id())->first();
+            if($like){
+                $isLike = true;
+            }
+            if(Auth::user()->id == $post->user_id || Auth::user()->role =='admin'){
+                $isAdmin = true;
+            }
+        }
+        return response()->json(['post' => $post, 'comments' => $comments, 'isAdmin' => $isAdmin, 'isLike' => $isLike]);
     }
 
     /**
@@ -68,7 +87,17 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->name = $request->name;
+        $post->subtitle = $request->subtitle;
+        $post->anons = $request->anons;
+        $post->content = $request->content;
+        if($request->has("photo")){
+        $path = Storage::disk("public")->putFile("photos", $request->file("photo"));
+        $post->photo = $path;
+        }
+        $post->save();
+        return response()->json(['id' => $post->id]);
+
     }
 
     /**

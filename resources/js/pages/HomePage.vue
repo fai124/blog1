@@ -24,9 +24,26 @@ import SideBarComponent from '../components/SideBarComponent.vue';
 
 export default {
     name: 'HomePage',
+    props: ['datasend', 'PUBLIC', 'pageId', 'changePage'],
     components: {
         PostComponent,
         SideBarComponent,
+    },
+    data() {
+        return {
+            posts: {},
+        };
+    },
+    mounted() {
+            this.getPost();
+    },
+    methods: {
+        getPost() {
+            this.datasend('posts').then((result) => {
+                this.posts = result;
+                console.log(result);
+            });
+        },
     },
 };
 </script>
